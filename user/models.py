@@ -10,6 +10,10 @@ class User(models.Model):
     address     =   models.CharField(max_length=200)
     pincode     =   models.CharField(max_length=6)
 
+    # USERNAME_FIELD = 'email'
+    # REQUIRED_FIELDS = []
+
+
     def __str__(self):
         return self.email
 

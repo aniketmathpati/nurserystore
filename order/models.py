@@ -11,7 +11,7 @@ class Order(models.Model):
     seller      =   models.ForeignKey(Nursery, on_delete=models.CASCADE)
     totalPrice  =   models.PositiveIntegerField()
     quantity    =   models.PositiveIntegerField()
-    createdAt   =   models.DateTimeField(default=timezone.now())
+    createdAt   =   models.DateTimeField(default=timezone.now)
     address     =   models.CharField(max_length=100)
     pincode     =   models.CharField(max_length=6)
     status      =   models.CharField(max_length=50)

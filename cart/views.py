@@ -6,9 +6,11 @@ from requirements import api_response
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.serializers import ValidationError
+from requirements import authentication
 
 
 class CartView(APIView):
+    @authentication.authenticate
     def get(self, request, userId):
         try:
             queryset    =   Cart.objects.filter(customer=userId)
@@ -24,6 +26,7 @@ class CartView(APIView):
             response    =   api_response.APIResponse(400, str(e), "data error").respond()
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+    @authentication.authenticate
     def post(self, request):
         try:
             serializer  =   CartSerializer(data=request.data)
@@ -40,6 +43,7 @@ class CartView(APIView):
             response    =   api_response.APIResponse(400, str(e), "Data error").respond()
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+    @authentication.authenticate
     def put(self, request, userId):
         try:
             # print(request.data)
@@ -70,6 +74,7 @@ class CartView(APIView):
             response    =   api_response.APIResponse(400, str(e), "Data error").respond()
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+    @authentication.authenticate
     def delete(self, request, userId):
         try:
             cart_instances   =   Cart.objects.filter(customer=userId)
@@ -87,6 +92,7 @@ class CartView(APIView):
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 class CartUnitView(APIView):
+    @authentication.authenticate
     def delete(self, request, userId, plantId):
         try:
             cart_instances   =   Cart.objects.filter(customer=userId, plant=plantId)

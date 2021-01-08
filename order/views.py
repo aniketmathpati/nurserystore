@@ -7,8 +7,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.serializers import ValidationError
 from plants.models import Plants
+from requirements import authentication
 
 class OrderByUserView(APIView):
+    @authentication.authenticate
     def get(self, request, userId):
         try:
             queryset  =   Order.objects.filter(customer=userId)
@@ -25,7 +27,8 @@ class OrderByUserView(APIView):
         except Exception as e:
             response    =   api_response.APIResponse(400, str(e), "Data error").respond()
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
-
+    
+    @authentication.authenticate
     def post(self, request):
         try:
             serializer  =   OrderSerializer(data=request.data)
@@ -42,6 +45,7 @@ class OrderByUserView(APIView):
             response    =   api_response.APIResponse(400, str(e), "Data error").respond()
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+    @authentication.authenticate
     def put(self, request, userId):
         try:
             # print(request.data)
@@ -73,6 +77,7 @@ class OrderByUserView(APIView):
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 class OrderByNurseryView(APIView):
+    @authentication.authenticate
     def get(self, request, nurseryId):
         try:
             queryset    =   Order.objects.filter(seller=nurseryId)
@@ -90,6 +95,7 @@ class OrderByNurseryView(APIView):
             response    =   api_response.APIResponse(400, str(e), "Data error").respond()
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+    @authentication.authenticate
     def put(self, request, nurseryId):
         try:
             # print(request.data)

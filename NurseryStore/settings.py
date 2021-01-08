@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(BASE_DIR)
+# print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -48,14 +48,16 @@ INSTALLED_APPS = [
     
 ]
 
+# AUTH_USER_MODEL = 'user.User'
+
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
 #         'requirements.authentication.MyAuthentication',
 #     ),
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         # 'rest_framework.permissions.IsAuthenticated',
-#         'rest_framework.permissions.AllowAny',
-#     )
+#     # 'DEFAULT_PERMISSION_CLASSES': (
+#     #     # 'rest_framework.permissions.IsAuthenticated',
+#     #     'rest_framework.permissions.AllowAny',
+#     # ),
 # }
 
 MIDDLEWARE = [

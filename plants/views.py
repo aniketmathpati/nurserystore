@@ -6,8 +6,10 @@ from rest_framework import status
 from .models import Plants
 from requirements import api_response
 from rest_framework.serializers import ValidationError
+from requirements import authentication
 
 class PlantsView(APIView):
+    @authentication.authenticate
     def get(self, request, id=None):
         try:
             if id is None:
@@ -29,6 +31,7 @@ class PlantsView(APIView):
             response    =   api_response.APIResponse(400, str(e)).respond()
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+    @authentication.authenticate
     def post(self, request):
         try:
             data    =   request.data
@@ -46,6 +49,7 @@ class PlantsView(APIView):
             response    =   api_response.APIResponse(400, str(e)).respond()
             return Response(response)
 
+    @authentication.authenticate
     def put(self, request, id):
         try:
             plant_instance  =   Plants.objects.get(pk=id)
@@ -67,6 +71,7 @@ class PlantsView(APIView):
             response    =   api_response.APIResponse(400, str(e)).respond()
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+    @authentication.authenticate
     def delete(self, request, id):
         try:
             plant_instance  =   Plants.objects.get(pk=id)

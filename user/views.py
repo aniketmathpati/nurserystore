@@ -7,11 +7,10 @@ from rest_framework import status
 from .serializer import UserSerializer
 from django.contrib.auth.hashers import make_password, check_password
 from requirements import authentication, api_response
-# from rest_framework import permissions
-
+from rest_framework.permissions import AllowAny
 
 class LoginView(APIView):
-    # permission_classes = [permissions.AllowAny]
+    permission_classes = [AllowAny]
     def post(self, request):
         try:
             email   =   request.data['email']
@@ -21,7 +20,7 @@ class LoginView(APIView):
             # print(check_password(password, user.password))
             if user:
                 if check_password(password, user.password):
-                    token       =   authentication.MyAuthentication().create_token(user.userId, email)
+                    token       =   authentication.create_token(user.userId, email)
                     response    =   api_response.APIResponse(200, token).respond()
                     return Response(data=response, status=status.HTTP_200_OK)
                 else:
